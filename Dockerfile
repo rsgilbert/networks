@@ -3,7 +3,5 @@ FROM node:16
 
 WORKDIR /web 
 
-CMD [ "mkdir", "/web" ]
-
 CMD ["sleep", "infinity"]
 
