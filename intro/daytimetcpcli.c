@@ -20,9 +20,13 @@ main(int argc, char **argv)
     if(argc != 2)
         err_quit("usage: a.out <IPaddress>");
 
-    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    // Create TCP socket
+    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 1)) < 0)
         err_sys("socket error");
     
+    // Specify server's IP address and port
+
+    // set entire structure to 0
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(13); /* daytime server */
