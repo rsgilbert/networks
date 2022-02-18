@@ -28,7 +28,7 @@
 #include <string.h>
 #include <sys/stat.h> /* for $_xxx file mode constants */
 #include <sys/uio.h> /* for iovec {} and readv/writev */
-#include <uistd.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <sys/un.h> /* for Unix domain sockets */
 
@@ -124,13 +124,13 @@ allocate an adequately sized buffer without #ifdefs in the code */
 struct unp_in_pktinfo {
     struct in_addr ipi_addr; /* dst IPv4 address */
     int ipi_ifindex; /* received interface index */
-}
+};
 
 /* We need the newer CMSG_LEN() and CMSG_SPACE() macros, but few 
 implementations support them today. These two macros really need 
-an ALIGN() macro but each implementation does this differently.
+an ALIGN() macro but each implementation does this differently. */
 
-#ifdef CMSG_LEN
+#ifndef CMSG_LEN
 #define CMSG_LEN(size)   (sizeof(struct cmsghdr) + (size))
 #endif
 #ifndef CMSG_SPACE 
@@ -182,8 +182,8 @@ kernels still #define it as 5, , while actually supporting many more */
 /* Following shortens all the typecasts of pointer arguments: */
 #define SA struct sockaddr
 
-#define HAVE_STRUCT_SOCKADDR_STORAGE 
 #ifndef HAVE_STRUCT_SOCKADDR_STORAGE
+
 /*
 * RFC 3493: protocol-independent placeholder for socket addresses
 */
@@ -204,7 +204,7 @@ struct sockaddr_storage {
     char __ss_pad1[__SS_PAD1SIZE];
     int64_t __ss_align;
     char __ss_pad2[__SS_PAD2SIZE];
-}
+};
 
 #endif
 
@@ -213,6 +213,7 @@ struct sockaddr_storage {
 
 /* default permissions for new directories */
 #define DIR_MODE (FILEMODE | S_IXUSR | S_IXGRP | S_IXOTH)
+
 
 /* for signal handlers */
 typedef void Sigfunc (int);
@@ -238,7 +239,7 @@ struct timespec {
 }
 #endif 
 
-
+#endif
 
 
 
