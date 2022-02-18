@@ -1,6 +1,15 @@
 #include "../lib/unp.h"
 #include "../lib/error.c"
 
+/**
+ * @brief 
+ * 
+ * @param argc IP of the daytime server. To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
+ *          An example with working IP is: ./a.out 129.6.15.28
+ * @param argv 
+ * @return int 
+ */
+
 int 
 main(int argc, char **argv)
 {
