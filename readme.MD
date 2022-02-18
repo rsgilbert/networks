@@ -20,3 +20,8 @@ To put simply, download the original source code from http://www.unpbook.com/unp
 
 Now extract the files for the tar file. Change into the folder and run `./configure` , that will generate a config.h file that you can copy into the root of the directory. Right next to this readme.MD file.
 
+
+I am studying networks because I want to learn how 
+networks work. I believe serious programming begins with
+knowing how networks work.
+
