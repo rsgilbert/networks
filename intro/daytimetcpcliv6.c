@@ -1,12 +1,13 @@
 #include "../lib/unp.h"
 #include "../lib/error.c"
+#include "../lib/wrapsock.c"
 
 /**
  * @brief 
  * Modifying program to work under ipv6 protocol.
  * 
- * @param argc IP of the daytime server. To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
- *          An example with working IP is: ./a.out 129.6.15.28 . Or you can do: gcc daytimetcpcli.c && ./a.out 132.163.97.2 
+ * @param argc IP of the daytime server eg ::ffff:84a3:6102 . To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
+ *          An example with working IP is: ./a.out ::ffff:84a3:6102 . Or you can do: gcc daytimetcpcliv6.c && ./a.out ::ffff:84a3:6102 
  * @param argv 
  * @return int 
  */
@@ -16,14 +17,15 @@ main(int argc, char **argv)
 {
     int sockfd, n;
     char recvline[MAXLINE + 1];
-    struct sockaddr_in servaddr;
+    // use ipv6 socket addresss
+    struct sockaddr_in6 servaddr;
 
     if(argc != 2)
         err_quit("usage: a.out <IPaddress>");
 
     // Create TCP socket
-    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        err_sys("socket error");
+    // Use AF_INET6 bse of ipv6
+    sockfd = Socket(AF_INET6, SOCK_STREAM, 0);
     
     // Specify server's IP address and port
 
@@ -31,16 +33,17 @@ main(int argc, char **argv)
     bzero(&servaddr, sizeof(servaddr));
 
     // Set address family
-    servaddr.sin_family = AF_INET;
+    // Use sin6_family for ipv6
+    servaddr.sin6_family = AF_INET6;
     // 13 is the well known port of daytime server on any TCP/IP host that supports this service.
     // htons stands for host to network short
-    servaddr.sin_port = htons(13); /* daytime server */
+    servaddr.sin6_port = htons(13); /* daytime server */
     
     
     // Set the IP address to the first value specified as the cli argument ( argv[1] ) 
     // The IP address and port must be in specific formats.
-    // inet_pton stands for presentation to numeric. Converts string ip eg 1.2.3.4 into proper format
-    if(inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0) 
+    // inet_pton stands for presentation to numeric. Converts string ip eg ::1 into proper format
+    if(inet_pton(AF_INET6, argv[1], &servaddr.sin6_addr) <= 0) 
         err_quit("inet_pton error for %s", argv[1]);
 
     // Establish connection with server
@@ -55,7 +58,6 @@ main(int argc, char **argv)
     // denoted by the server closing the connection (when read returns 0).
     while( (n = read(sockfd, recvline, MAXLINE)) > 0) {
         recvline[n] = 0; /* null terminate */
-        printf("n is %d , recvline is %s, MAXLINE is %d\n", n, recvline, MAXLINE);
         if(fputs(recvline, stdout) == EOF) 
             err_sys("fputs error");
     }

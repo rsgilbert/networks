@@ -4,7 +4,7 @@
 /**
  * @brief 
  * 
- * @param argc IP of the daytime server. To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
+ * @param argc IP of the daytime server eg 132.163.97.2. To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
  *          An example with working IP is: ./a.out 129.6.15.28 . Or you can do: gcc daytimetcpcli.c && ./a.out 132.163.97.2 
  * @param argv 
  * @return int 
