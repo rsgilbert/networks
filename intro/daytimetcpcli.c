@@ -21,15 +21,24 @@ main(int argc, char **argv)
         err_quit("usage: a.out <IPaddress>");
 
     // Create TCP socket
-    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 1)) < 0)
+    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         err_sys("socket error");
     
     // Specify server's IP address and port
 
     // set entire structure to 0
     bzero(&servaddr, sizeof(servaddr));
+
+    // Set address family
     servaddr.sin_family = AF_INET;
+    // 13 is the well known port of daytime server on any TCP/IP host that supports this service.
+    // htons stands for host to network short
     servaddr.sin_port = htons(13); /* daytime server */
+    
+    
+    // Set the IP address to the first value specified as the cli argument ( argv[1] ) 
+    // The IP address and port must be in specific formats.
+    // inet_pton stands for presentation to network. Converts string ip eg 1.2.3.4 into proper format
     if(inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0) 
         err_quit("inet_pton error for %s", argv[1]);
 

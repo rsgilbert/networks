@@ -25,3 +25,13 @@ I am studying networks because I want to learn how
 networks work. I believe serious programming begins with
 knowing how networks work.
 
+
+# Installation instructions on Windows
+Take a look at this page: https://code.visualstudio.com/docs/languages/cpp
+
+To put simply, go to https://www.msys2.org/ and download then install msys2
+
+Once installed, open the msys2 prompt and install mingw-w64 using the pacman tool provided by msys2:
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+
+
