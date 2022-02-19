@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "unp.h": "c"
+        "unp.h": "c",
+        "stdarg.h": "c",
+        "in.h": "c",
+        "errno.h": "c",
+        "error_t.h": "c",
+        "features.h": "c",
+        "socket.h": "c"
     }
 }

@@ -54,7 +54,6 @@ main(int argc, char **argv)
     // denoted by the server closing the connection (when read returns 0).
     while( (n = read(sockfd, recvline, MAXLINE)) > 0) {
         recvline[n] = 0; /* null terminate */
-        printf("n is %d , recvline is %s, MAXLINE is %d\n", n, recvline, MAXLINE);
         if(fputs(recvline, stdout) == EOF) 
             err_sys("fputs error");
     }
