@@ -3,6 +3,7 @@
 
 /**
  * @brief 
+ * Modifying program to work under ipv6 protocol.
  * 
  * @param argc IP of the daytime server. To see list of available time servers, visit: https://tf.nist.gov/tf-cgi/servers.cgi
  *          An example with working IP is: ./a.out 129.6.15.28 . Or you can do: gcc daytimetcpcli.c && ./a.out 132.163.97.2 

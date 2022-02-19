@@ -23,4 +23,6 @@ main()
 
  printf("server addr is %s\n", &servaddr.sin_addr);
 
+    printf("length %d\n", sizeof(servaddr));
+
 }
