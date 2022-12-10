@@ -1,6 +1,8 @@
 #include "unp.h"
 #include <stdarg.h> /* ANSI C header file */
 #include <syslog.h> /* for syslog() */
+#include "./errnoname.c"
+
 
 int daemon_proc;  /* set nonzero by daemon_init() */
 
@@ -91,7 +93,7 @@ err_doit(int errnoflag, int level, const char *fmt, va_list ap)
 #endif
     n = strlen(buf);
     if(errnoflag) 
-        snprintf(buf + n, MAXLINE - n, ": %s", strerror(errno_save));
+        snprintf(buf + n, MAXLINE - n, ": %d, %s, %s", errno_save, errnoname(errno_save), strerror(errno_save));
     strcat(buf, "\n");
 
     if(daemon_proc) {

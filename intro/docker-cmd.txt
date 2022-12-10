@@ -1,0 +1,36 @@
+// Get docker image that has networking tools
+// See: https://hub.docker.com/r/nicolaka/netshoot
+docker pull nicolaka/netshoot:v0.1
+
+// Launch netshoot with another container's network namespace
+docker run -it --net container:gcc_container nicolaka/netshoot:v0.1
+
+// netstat
+// See active internet connections 
+netstat -tulpn
+
+// Show routing table (-r)
+// -n means don't resolve names but rather indicate the IPs
+netstat -rn 
+
+
+// nmap 
+// Stands for network mapper. Its used for network exploration 
+// and security auditing
+// Scan for open ports in range 10 to 13 on host 0.0.0.0 
+nmap -p 10-13 --d 0.0.0.0
+
+// ifconfig 
+// Get details of an interface or all interfaces 
+ifconfig 
+ifconfig eth0
+
+// Get information on all configured network interfaces
+ifconfig -a 
+
+
+// ping 
+// ping broadcast address
+ping -b 172.19.255.255
+
+

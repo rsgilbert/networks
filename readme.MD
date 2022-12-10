@@ -35,3 +35,4 @@ Once installed, open the msys2 prompt and install mingw-w64 using the pacman too
 pacman -S --needed base-devel mingw-w64-x86_64-toolchain
 
 
+POSIX stands for Portable Operating System Interface.

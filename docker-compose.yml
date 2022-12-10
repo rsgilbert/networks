@@ -2,8 +2,22 @@ services:
   web:
     build:
       dockerfile: ./Dockerfile 
+    # restart: always
     volumes:
       - ./:/web 
-    
+    networks:
+      - my_network    
     container_name: gcc_container
+  
+  netshoot:
+    image: nicolaka/netshoot:v0.1
+    # restart: always
+    networks:
+      - my_network 
+    container_name: netshoot_container
+
+networks:
+  my_network:
+    driver: bridge 
+
     

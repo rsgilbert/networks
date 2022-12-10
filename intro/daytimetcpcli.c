@@ -1,5 +1,7 @@
 #include "../lib/unp.h"
-#include "../lib/error.c"
+#include "../lib/wrapsock.c"
+
+
 
 /**
  * @brief 
@@ -33,8 +35,7 @@ main(int argc, char **argv)
     servaddr.sin_family = AF_INET;
     // 13 is the well known port of daytime server on any TCP/IP host that supports this service.
     // htons stands for host to network short
-    servaddr.sin_port = htons(13); /* daytime server */
-    
+    servaddr.sin_port = htons(13); /* daytime server */     
     
     // Set the IP address to the first value specified as the cli argument ( argv[1] ) 
     // The IP address and port must be in specific formats.
@@ -43,8 +44,9 @@ main(int argc, char **argv)
         err_quit("inet_pton error for %s", argv[1]);
 
     // Establish connection with server
-    if(connect(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0) 
-        err_sys("connect error");
+    // if(connect(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0) 
+    //     err_sys("connect error");
+    Connect(sockfd, (SA *) &servaddr, sizeof(servaddr));
 
     // Read and display server's reply
     // if read returns 0 it means the other end closed the connection.
@@ -52,8 +54,11 @@ main(int argc, char **argv)
     // TCP itself provides no record markers so an application must determine what
     // constitutes the end of a record, in this case the end of the record is being 
     // denoted by the server closing the connection (when read returns 0).
-    while( (n = read(sockfd, recvline, MAXLINE)) > 0) {
-        recvline[n] = 0; /* null terminate */
+    int counter = 0;
+    while( (n = read(sockfd, recvline, 3)) > 0) {
+        counter ++;
+        recvline[n] = '\n';
+        recvline[n+1] = 0; /* null terminate */
         if(fputs(recvline, stdout) == EOF) 
             err_sys("fputs error");
     }
@@ -61,6 +66,7 @@ main(int argc, char **argv)
     if(n < 0)
         err_sys("read error");
 
+    printf("Counter ran %d times", counter);
     // Terminate program. Unix will close all open descriptors including our TCP socket.
     exit(0);
 }
